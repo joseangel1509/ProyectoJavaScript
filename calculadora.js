@@ -1,124 +1,128 @@
 alert("Hola, te damos la bienvenida a la calculadora.")
 
 let respuesta = true
-
+let a = '';
+let b = '';
 while(respuesta){
 
 
-let operacion = prompt("¿Que operación deseas realizar?");
+let operacion = '';
 
-operacion = operacion.trim();
+function operacionvalid(){
 
-while(operacion !== '+' && operacion !== '-' && operacion !== '*' && operacion !== '/')
+    while(operacion !== '+' && operacion !== '-' && operacion !== '*' && operacion !== '/')
     {
-        alert("No es un operando válido...")
-        operacion = prompt("¿Que operación deseas realizar?");
+        
+
+        operacion= prompt("¿Que operación deseas realizar?");
         operacion = operacion.trim();
+
+        if(operacion === '+' || operacion === '-' || operacion === '*' || operacion === '/'){
+            
+        }else{
+
+        
+        alert("No es un operando válido...")
+        
+        }
 }
 
-let numeros = prompt("Dime dos numeros, separados por espacios.");
+}
 
-let a = '';
-let b = '';
-let i = 0;
+operacionvalid();
 
-    for (i; i<numeros.length; i++){
+
+
+function numerosvalidar(){
+
+
+    let numeros = prompt("Dime dos numeros, separados por espacios.");
+
+    a='';
+    b='';
+    let i = 0;
+
+        for (i; i<numeros.length; i++){
     
 
-        if (numeros[i] !== ' '){
+            if (numeros[i] !== ' '){
             
             a += numeros[i];
+
+            }else{
+                if(a !== ''){
+                    
+            
+
+                break;
+                }
+            }
+        }
+
+        for (i; i<numeros.length; i++){
+
+            if (numeros[i] !== ' '){
+                b += numeros[i];
+            }   else{
+                if(b !== ''){
+    
+                
+    
+                break;
+                }
+            }
+            
+        }
+    
+
+
+
+
+
+
+    if(isNaN(a) || isNaN(b))
+    {
+        alert("No es un número válido.");
+        return false;
 
         }else{
-                if(a !== ''){
-
-            
-
-                break;
-            }
+            return true;
         }
-    }
 
-    for (i; i<numeros.length; i++){
+    };
 
-        if (numeros[i] !== ' '){
-                b += numeros[i];
-        }   else{
-                if(b !== ''){
-    
-                
-    
-                break;
-            }
-        }
-            
-    }
-    
+let numerosval=numerosvalidar();
 
+while(!numerosval){
 
-
-
-
-
-while(isNaN(a) || isNaN(b))
-    {
-        alert("No es un número válido.")
-        numeros = prompt("Dime dos numeros, separados por espacios.");
-a = '';
-b = '';
-i = 0;
-
-for (i; i<numeros.length; i++){
-
-    if (numeros[i] !== ' '){
-       
-            a += numeros[i];
-        } else{
-            if(a !== ''){
-
-            
-
-            break;
-        }
-        }
-    
-    }
-
-    for (i; i<numeros.length; i++){
-
-        if (numeros[i] !== ' '){
-                b += numeros[i];
-            }else{
-                if(b !== ''){
-    
-                
-    
-                break;
-            }
-            }
-            
-    
-        }
+numerosval=numerosvalidar();
     
 }
+
+
+
 let resultado = 0;
 
 switch(operacion)
     {
-        case '+': resultado = Number(a)+Number(b);
+        case '+': resultado = () => Number(a)+Number(b);
+        alert(resultado());
         break;
 
-        case '-': resultado = Number(a)-Number(b);
+        case '-':  resultado = () => Number(a)-Number(b);
+        alert(resultado());
         break;
 
-        case '*': resultado = Number(a)*Number(b);
+        case '*':  resultado = () => Number(a)*Number(b);
+        alert(resultado());
         break;
 
-        case '/': resultado = Number(a)/Number(b);
+        case '/':  resultado = () => Number(a)/Number(b);
+        alert(resultado());
         break;
 
 }
-alert(resultado)
+
 
 respuesta = confirm("¿Deseas realizar otra operación?");
 }
