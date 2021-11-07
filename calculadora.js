@@ -1,158 +1,173 @@
+"use strict";
 
-let calculadora = {
 
-    respuesta : true,
-    a : '',
-    b : '',
-    operacion : '',
-    suma() {  resulatdo = (Number(this.a)+Number(this.b));
-    alert(resulatdo);
-    Number(this.lastResult=resulatdo);},
-    resta() { resulatdo = (Number(this.a)-Number(this.b));
-    alert(resulatdo);
-    Number(this.lastResult=resulatdo);},
-    mult() { resulatdo = (Number(this.a)*Number(this.b));
-    alert(resulatdo);
-    Number(this.lastResult=resulatdo);},
-    div() { resulatdo =(Number(this.a)/Number(this.b));
-    alert(resulatdo)
-    Number(this.lastResult=resulatdo);},
-    lastResult:0,
+let respuesta = true;
+let a = '';
+let b = '';
+let operacion = '';
+let valido = false;
 
-};
+
+class Calculadora {
+
+    constructor() {
+        this.lastResult = 0;
+    }
+
+    suma(a, b) {
+        this.lastResult = (Number(a) + Number(b));
+        alert(this.lastResult);
+
+    }
+
+    rest(a, b) {
+        this.lastResult = (Number(a) - Number(b));
+        alert(this.lastResult);
+    }
+
+    mult(a, b) {
+        this.lastResult = (Number(a) * Number(b));
+        alert(this.lastResult);
+
+    }
+
+    div(a, b) {
+        this.lastResult = (Number(a) / Number(b));
+        alert(this.lastResult);
+
+    }
+
+}
+
+let calculadora = new Calculadora;
 
 alert("Hola, te damos la bienvenida a la calculadora.")
 
 
-while(calculadora.respuesta){
+while (respuesta) {
 
 
- 
+    function OperacionValida() {
 
-    calculadora.opvalid= function operacionvalid(){
+        operacion = '';
 
-    this.operacion='';
-    
-    while(this.operacion !== '+' && this.operacion !== '-' && this.operacion !== '*' && this.operacion !== '/')
-    {
-        
+        while (operacion !== '+' && operacion !== '-' && operacion !== '*' && operacion !== '/') {
+            try {
 
-        this.operacion= prompt("¿Que operación deseas realizar?");
-        this.operacion = this.operacion.trim();
+                operacion = prompt("¿Que operación deseas realizar?");
+                operacion = operacion.trim();
 
-        if(this.operacion === '+' || this.operacion === '-' || this.operacion === '*' || this.operacion === '/'){
-            
-        }else{
-
-        
-        alert("No es un operando válido...")
-        
-        }
-}
-
-};
-
-calculadora.opvalid();
+                if (operacion !== '+' && operacion !== '-' && operacion !== '*' && operacion !== '/') {
 
 
-do {
-
-
-calculadora.val= function numerosvalidar(){
-
-
-    let numeros = prompt("Dime dos numeros, separados por espacios.");
-
-    this.a='';
-    this.b='';
-    let i = 0;
-
-        for (i; i<numeros.length; i++){
-    
-            if (numeros[i] !== ' '){
-                if (numeros[i]==='R'){
-                    Number(this.a = this.lastResult);
-                }else{
-
-                    Number(this.a += numeros[i]);
+                    throw new Error("No es un operando válido...")
 
                 }
-            
-            }else{
-                if(this.a !== ''){
-                    
-            
-
-                break;
-                }
+            } catch (err) {
+                alert(err.message);
             }
-        }
 
-        for (i; i<numeros.length; i++){
-
-            if (numeros[i] !== ' '){
-                if (numeros[i]==='R'){
-                    Number(this.b = this.lastResult);
-                }else{
-
-                    Number(this.b += numeros[i]);
-
-                }
-            
-            }else{
-                if(this.b !== ''){
-    
-                
-    
-                break;
-                }
-            }
-            
-        }
-    
-
-
-
-
-
-
-    if((isNaN(this.a) || isNaN(this.b)) || this.a==='' || this.b==='')
-    {
-        alert("No es un número válido.");
-        return false;
-
-        }else{
-            return true;
         }
 
     };
 
+    OperacionValida();
 
 
-}while(!calculadora.val());
+    do {
+
+        function NumerosValidos() {
+
+            let numeros = prompt("Dime dos numeros, separados por espacios.");
+
+            a = '';
+            b = '';
+            let i = 0;
+
+
+            try {
+
+                for (i; i < numeros.length; i++) {
+
+                    if (numeros[i] !== ' ') {
+                        if (numeros[i] === 'R' && numeros[(i + 1)] === ' ') {
+                            Number(a = calculadora.lastResult);
+                        } else {
+
+                            Number(a += numeros[i]);
+
+                        }
+
+                    } else {
+                        if (a !== '') {
 
 
 
-switch(calculadora.operacion)
-    {
-        case '+': 
-        calculadora.suma();
-        break;
+                            break;
+                        }
+                    }
+                }
 
-        case '-': 
-        calculadora.resta();
-        break;
+                for (i; i < numeros.length; i++) {
 
-        case '*': 
-        calculadora.mult();
-        break;
+                    if (numeros[i] !== ' ') {
+                        if (numeros[i] === 'R' && numeros[(i - 1)] === ' ') {
+                            Number(b = calculadora.lastResult);
+                        } else {
 
-        case '/': 
-        calculadora.div();
-        break;
+                            Number(b += numeros[i]);
 
-}
+                        }
 
-calculadora.respuesta = confirm("¿Deseas realizar otra operación?");
+                    } else {
+                        if (b !== '') {
+
+
+
+                            break;
+                        }
+                    }
+
+                }
+
+                if ((isNaN(a) || isNaN(b)) || a === '' || b === '') {
+                    throw new Error("No es un número válido.");
+                }
+
+            } catch (err) {
+
+                alert(err.message);
+                return false;
+            }
+
+            return true;
+
+        };
+
+        valido = NumerosValidos();
+
+    } while (!valido);
+
+
+    switch (operacion) {
+        case '+':
+            calculadora.suma(a, b);
+            break;
+
+        case '-':
+            calculadora.rest(a, b);
+            break;
+
+        case '*':
+            calculadora.mult(a, b);
+            break;
+
+        case '/':
+            calculadora.div(a, b);
+            break;
+
+    }
+
+    respuesta = confirm("¿Deseas realizar otra operación?");
 
 }
